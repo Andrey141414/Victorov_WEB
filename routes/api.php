@@ -23,6 +23,9 @@ Route::controller(App\Http\Controllers\ShowController::class)->group(function ()
     Route::get('/all_stones', 'allStones');
     Route::get('/all_minerals', 'allMinerals');
     Route::get('/all_territories', 'allTerritories');
+    Route::get('/get_mineral', 'getMineral');
+
+    
 });
 
 Route::controller(App\Http\Controllers\CreateController::class)->group(function () {
@@ -36,4 +39,14 @@ Route::controller(App\Http\Controllers\ChangeController::class)->group(function 
     Route::post('/change_stone', 'changeStones');
     Route::post('/change_mineral', 'changeMinerals');
     Route::post('/change_territory', 'changeTerritories');
+});
+
+Route::controller(App\Http\Controllers\DeleteController::class)->group(function () {
+    Route::delete('/delete_stone', 'deleteStones');
+    Route::delete('/delete_mineral', 'deleteMinerals');
+    Route::delete('/delete_territory', 'deleteTerritories');
+});
+
+Route::controller(App\Http\Controllers\ShowController::class)->group(function () {
+    Route::post('/test', 'test');
 });

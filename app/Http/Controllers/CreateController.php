@@ -7,6 +7,7 @@ use App\Models\Stones;
 use App\Models\Minerals;
 use App\Models\Territories;
 use App\Models\MineralTerritory;
+use Illuminate\Support\Facades\Storage;
 
 class CreateController extends Controller
 {
@@ -37,7 +38,6 @@ class CreateController extends Controller
         $mineral = new Minerals();
         
 
-        'territories';
         $minerals = Minerals::all();
 
         $mineral->name = $request->input('name');
@@ -48,8 +48,16 @@ class CreateController extends Controller
         $mineral->description = $request->input('description');
         $mineral->id_stone = $request->input('stone');
         
+
         $mineral->save();
-        
+
+         
+        //  $files = $request->photo;
+        //  foreach($files as $file)
+        //  {
+        //      Storage::disk('local')->put("photo/".$mineral->id, $file);
+        //  }
+
 
         $territories = $request->input('territories');
 
