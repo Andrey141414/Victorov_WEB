@@ -8,6 +8,7 @@ use App\Models\Stones;
 use App\Models\Minerals;
 use App\Models\Territories;
 use App\Models\MineralTerritory;
+use Illuminate\Support\Facades\Storage;
 
 class DeleteController extends Controller
 {
@@ -36,6 +37,7 @@ class DeleteController extends Controller
 
         $id_mineral = $request->input('id_mineral');
         
+        Storage::deleteDirectory("photo/$id_mineral");
         $mineral = Minerals::where('id',$id_mineral)->first();
         $mineral->delete();
         

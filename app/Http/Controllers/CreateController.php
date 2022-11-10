@@ -18,7 +18,7 @@ class CreateController extends Controller
         $stone->name = $request->input('name');
         $stone->save();
 
-        return response()->json(Stones::all()); 
+        return response()->json(Stones::where('id',$stone->id)->first()); 
     }
 
     public function createTerritories(Request $request)
@@ -27,7 +27,7 @@ class CreateController extends Controller
 
         $territory->name = $request->input('name');
         $territory->save();
-        return response()->json(Territories::all()); 
+        return response()->json(Territories::where('id',$territory->id)->first()); 
     }
 
 
@@ -52,11 +52,11 @@ class CreateController extends Controller
         $mineral->save();
 
          
-        //  $files = $request->photo;
-        //  foreach($files as $file)
-        //  {
-        //      Storage::disk('local')->put("photo/".$mineral->id, $file);
-        //  }
+         $files = $request->file('photos');
+         foreach($files as $file)
+         {
+            Storage::put("photo/$mineral->id",$file);
+         }
 
 
         $territories = $request->input('territories');
@@ -70,7 +70,7 @@ class CreateController extends Controller
         }
          
 
-        return response()->json(Minerals::all()); 
+        return response()->json(Minerals::where('id',$mineral->id)->first()); 
     }  
 
 }

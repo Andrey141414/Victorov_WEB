@@ -7,6 +7,7 @@ use App\Models\Minerals;
 use App\Models\Territories;
 use App\Models\MineralTerritory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ChangeController extends Controller
 {
@@ -18,7 +19,7 @@ class ChangeController extends Controller
         
         $stone->save();
 
-        return response()->json(Stones::all()); 
+        return response()->json(Stones::where('id',$stone->id)->first()); 
     }
 
     public function changeTerritories(Request $request)
@@ -29,7 +30,7 @@ class ChangeController extends Controller
         $territory->name = $request->input('name');
         
         $territory->save();
-        return response()->json(Territories::all()); 
+        return response()->json(Territories::where('id',$territory->id)->first()); 
     }
 
 
@@ -52,6 +53,14 @@ class ChangeController extends Controller
         $mineral->save();
         
 
+        Storage::deleteDirectory("photo/$mineral->id");
+
+        $files = $request->file('photos');
+         foreach($files as $file)
+         {
+            Storage::put("photo/$mineral->id",$file);
+         }
+
         $territories = $request->input('territories');
 
         $mineralsOfTerritory =  MineralTerritory::where('id_mineral',$id_mineral)->get();
@@ -70,7 +79,7 @@ class ChangeController extends Controller
         }
          
 
-        return response()->json(Minerals::all()); 
+        return response()->json(Minerals::where('id',$mineral->id)->first()); 
     }  
 
 }

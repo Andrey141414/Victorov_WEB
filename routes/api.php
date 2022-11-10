@@ -48,5 +48,5 @@ Route::controller(App\Http\Controllers\DeleteController::class)->group(function 
 });
 
 Route::controller(App\Http\Controllers\ShowController::class)->group(function () {
-    Route::post('/test', 'test');
+    Route::get('/test', 'test');
 });

@@ -16,27 +16,43 @@ class ShowController extends Controller
     {
 
 
+
+
+
+
+       // return str_replace("1","2","111222");
+        //     array|string $search,
+        //     array|string $replace,
+        //     string|array $subject,
+        //     int &$count = null
+        // ): string|array
+
+
+
+
+        // $directory = 'photo/56';
+        // Storage::deleteDirectory($directory);
+
+        // return 0;
         
-        //$file = $request->file('photo');
-        $id_mineral = 1;
-        $files = $request->photo;
+        $files = Storage::disk("local")->allFiles("/photo/57");
+        $file = $files[1];
+        $file1 = $files[0];
+        //Storage::download($files[0]);
+        $path1 = str_replace("\\","/",Storage::path($file));
+        $path0 = str_replace("\\","/",Storage::path($file1));
 
-        return $files;
-        //Storage::disk("local")->get('photo/1');
-        //return ($file);
         
-       // $images = $request->input('images');
-        // $photo_id = 1;
+$arr = [
+    response()->file($path0),
+    response()->file($path1),
+];
+return $arr[1];
 
-
-        // Storage::disk("local")->makeDirectory($photo_id);
-        // //цикл
-        // foreach ($images as $key => $data) {
-        //     $path = $photo_id.'/'.$key.'.jpeg';
-        //     $data = base64_decode($data);
-
-        //     Storage::disk("local")->put('public/'.$path,$data);
-        // }
+//return response()->file([$path0,$path1]);
+        //return response()->file('C:\Users\andru\OneDrive\Рабочий стол\лабы для пацанов\application\storage\app\photo\58');
+        //return "<img src=$file>";
+       
     }
     public function allStones()
     {
@@ -83,7 +99,6 @@ class ShowController extends Controller
         $stone_name = Stones::where('id',$mineral->id_stone)->first()->name;
 
         $response['mineral'] = ([
-            //'id' => $mineral->id,
             'name'      =>$mineral->name,
             'weight'    =>$mineral->weight,
             'length'    =>$mineral->length,
@@ -91,10 +106,19 @@ class ShowController extends Controller
             'height'    =>$mineral->height,
             'description'=>	$mineral->description,
             'stone_name' => $stone_name,
-            //'id_stone'	=>$mineral->id_stone,
+            
         ]);
 
         $m_ts = MineralTerritory::where('id_mineral', $mineral->id)->get();
+
+
+        $photos = Storage::disk("local")->allFiles("photo/$mineral->id");
+
+        foreach($photos as $photo)
+        {
+            $photo =  str_replace("\\","/",Storage::path($photo));
+            $response['photos'][] = response()->file($photo);
+        }
 
         $territories = [];
         foreach($m_ts as $m_t)
@@ -102,6 +126,6 @@ class ShowController extends Controller
             $territory_info = Territories::where('id',$m_t->id_territory)->first();
             $response['territories'][]  = ($territory_info->name);
         }
-        return $response;
+        return  $response;
     }
 }
