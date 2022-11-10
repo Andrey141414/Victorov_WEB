@@ -128,6 +128,6 @@ return $arr[1];
             $territory_info = Territories::where('id',$m_t->id_territory)->first();
             $response['territories'][]  = ($territory_info->name);
         }
-        return  $response['photos'][1];
+        return  $response;
     }
 }
