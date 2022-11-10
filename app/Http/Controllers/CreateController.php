@@ -34,7 +34,7 @@ class CreateController extends Controller
 
     public function createMinerals(Request $request)
     {
-
+        Log::info('Request', ['Request' => $request->all()]);
 
         $mineral = new Minerals();
         
@@ -54,7 +54,7 @@ class CreateController extends Controller
 
          //echo(json_encode($request->file('photos')));
 
-         Log::info('Request', ['Request' => $request->all()]);
+        
 
 
          $files = $request->file('photos');
