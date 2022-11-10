@@ -8,6 +8,7 @@ use App\Models\Minerals;
 use App\Models\Territories;
 use App\Models\MineralTerritory;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class CreateController extends Controller
 {
@@ -51,7 +52,11 @@ class CreateController extends Controller
 
         $mineral->save();
 
-         
+         //echo(json_encode($request->file('photos')));
+
+         Log::info('Request', ['Request' => $request->all()]);
+
+
          $files = $request->file('photos');
          foreach($files as $file)
          {
