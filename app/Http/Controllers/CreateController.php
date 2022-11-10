@@ -35,25 +35,6 @@ class CreateController extends Controller
     public function createMinerals(Request $request)
     {
 
-        $files = ($_FILES['photos']);
-        
-        return ($files) ;
-
-        //$i = 0;
-
-//return base_path('storage\app\photo\100');
-
-        for($i = 0;$i<2;$i++)
-        {
-            $target =base_path('storage/app/photo/100/').$_FILES['photos']['name'][$i];
-            move_uploaded_file($_FILES['photos']['tmp_name'][$i], $target);
-        }
-
-
-
-        return ($files) ;
-        Log::info('Request', ['Request' => $request->all()]);
-
         $mineral = new Minerals();
         
 
@@ -70,14 +51,18 @@ class CreateController extends Controller
 
         $mineral->save();
 
-         //echo(json_encode($request->file('photos')));
+       
 
-        // move_uploaded_file( $_FILES['names']['8_modem_pool_with_small_and_big_jpg']['tmp_name'], $target);
+         Log::info('Request', ['Request' => $request->all()]);
 
-         //$files = $request->file('photos');
-         foreach($files['full_path'] as $path)
+
+         $files = $request->input('photos');
+         $i = 0;
+         foreach($files as $file)
          {
-           Storage::put("photo/$mineral->id",$path);
+            $file = base64_decode($file);  
+            Storage::put("photo/$mineral->id/$i.jpeg",$file);
+            $i++;
          }
 
 

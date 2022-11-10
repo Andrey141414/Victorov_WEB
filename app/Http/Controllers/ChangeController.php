@@ -55,11 +55,15 @@ class ChangeController extends Controller
 
         Storage::deleteDirectory("photo/$mineral->id");
 
-        $files = $request->file('photos');
-         foreach($files as $file)
-         {
-            Storage::put("photo/$mineral->id",$file);
-         }
+        $files = $request->input('photos');
+        $i = 0;
+        foreach($files as $file)
+        {
+           $file = base64_decode($file);  
+           Storage::put("photo/$mineral->id/$i.jpeg",$file);
+           $i++;
+        }
+
 
         $territories = $request->input('territories');
 
