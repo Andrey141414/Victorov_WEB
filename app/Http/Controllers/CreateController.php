@@ -37,7 +37,7 @@ class CreateController extends Controller
 
         $files = ($_FILES['photos']);
         
-        //return ($files) ;
+        return ($files) ;
 
         //$i = 0;
 
