@@ -15,10 +15,11 @@ class ShowController extends Controller
     public function test(Request $request)
     {
 
+        Storage::disk("local")->makeDirectory('public/'.'IN_GOOD_HANDS/');
+        $file = 'C:\Users\andru\OneDrive\Рабочий стол\лабы для пацанов\application\storage\app\public\photo\72\0.jpeg';
+        Storage::url($file);
 
-
-
-
+return Storage::url($file);
 
        // return str_replace("1","2","111222");
         //     array|string $search,
@@ -112,20 +113,21 @@ return $arr[1];
         $m_ts = MineralTerritory::where('id_mineral', $mineral->id)->get();
 
 
-        $photos = Storage::disk("local")->allFiles("photo/$mineral->id");
+        $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
 
+        return Storage::url($photos[0]);
         foreach($photos as $photo)
         {
-            $photo =  str_replace("\\","/",Storage::path($photo));
-            $response['photos'][] = response()->file($photo);
+            $photo =  Storage::path($photo);
+            $response['photos'][] = ($photo);
         }
-
+        
         $territories = [];
         foreach($m_ts as $m_t)
         {
             $territory_info = Territories::where('id',$m_t->id_territory)->first();
             $response['territories'][]  = ($territory_info->name);
         }
-        return  $response;
+        return  $response['photos'][1];
     }
 }

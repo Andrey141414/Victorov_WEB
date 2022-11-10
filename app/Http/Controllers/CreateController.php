@@ -61,7 +61,7 @@ class CreateController extends Controller
          foreach($files as $file)
          {
             $file = base64_decode($file);  
-            Storage::put("photo/$mineral->id/$i.jpeg",$file);
+            Storage::disk('local')->put("public/photo/$mineral->id/$i.jpeg",$file);
             $i++;
          }
 
