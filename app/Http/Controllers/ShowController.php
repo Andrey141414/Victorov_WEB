@@ -115,11 +115,11 @@ return $arr[1];
 
         $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
 
-        return Storage::url($photos[0]);
+       
         foreach($photos as $photo)
         {
-            $photo =  Storage::path($photo);
-            $response['photos'][] = ($photo);
+            $photo =  Storage::url($photo);
+            $response['photos'][] = env('DOMEN_URL').($photo);
         }
         
         $territories = [];
