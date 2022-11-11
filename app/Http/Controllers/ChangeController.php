@@ -62,6 +62,7 @@ class ChangeController extends Controller
         {
             $photo = $this->getStringBetween($photo,env('DOMEN_URL')."/storage","");
             Storage::disk("local")->delete("public".$photo);
+            return $photo;
         }
 
 
