@@ -72,7 +72,7 @@ class ChangeController extends Controller
         {
             $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
 
-            if([count($photos)] == 0)
+            if(count($photos) == 0)
             {
                 $max = 0;
             }
