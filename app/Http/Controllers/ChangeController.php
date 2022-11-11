@@ -56,8 +56,11 @@ class ChangeController extends Controller
         
         
         $delete_photos = $request->input('delete_photos');
+
+        
         foreach($delete_photos as $photo)
         {
+            $photo = $this->getStringBetween($photo,env('DOMEN_URL'),"");
             Storage::disk("local")->delete($photo);
         }
 
