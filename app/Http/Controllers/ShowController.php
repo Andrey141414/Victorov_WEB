@@ -83,6 +83,7 @@ return $arr[1];
             }
            else{
             $photo = null;
+            
            }
             $stone_name = Stones::where('id',$mineral->id_stone)->first()->name;
             $response[] = ([
