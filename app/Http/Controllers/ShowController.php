@@ -29,7 +29,12 @@ class ShowController extends Controller
         $from = "=";
         $to = "]";
         
-        echo $this->getStringBetween($str,$from,$to);
+
+        $test  = "http://vinokurovandrey.site/storage/photo/44/0.jpeg";
+
+        $start = env('DOMEN_URL')."/storage";
+        echo substr($test,strlen($start));
+        //echo $this->getStringBetween($str,$from,$to);
 
        
     }
