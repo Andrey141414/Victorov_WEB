@@ -74,6 +74,16 @@ return $arr[1];
 
         foreach( $minerals as $mineral )
         {
+
+            $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
+            if($photos != null)
+            {
+                $photo =  Storage::url($photos[0]);
+                $photo = env('DOMEN_URL').($photo);
+            }
+           else{
+            $photo = null;
+           }
             $stone_name = Stones::where('id',$mineral->id_stone)->first()->name;
             $response[] = ([
                 'id' => $mineral->id,
@@ -85,9 +95,13 @@ return $arr[1];
                 'description'=>	$mineral->description,
                 'stone_name' => $stone_name,
                 'id_stone'	=>$mineral->id_stone,
+                'photo' => $photo ,
             ]);
             
         }
+
+
+
         return $response; 
     }
 
