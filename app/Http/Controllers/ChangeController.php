@@ -54,32 +54,40 @@ class ChangeController extends Controller
         
 
         
-        
-        $delete_photos = $request->input('delete_photos');
-
-        
-        foreach($delete_photos as $photo)
+        if($request->input('delete_photos') != null)
         {
-            $photo = substr($photo ,strlen(env('DOMEN_URL')."/storage"));
-            //$photo = $this->getStringBetween($photo,env('DOMEN_URL')."/storage",".jpeg");
-            Storage::disk("local")->delete("public".$photo);
+            $delete_photos = $request->input('delete_photos');
+            foreach($delete_photos as $photo)
+            {
+                $photo = substr($photo ,strlen(env('DOMEN_URL')."/storage"));
+                //$photo = $this->getStringBetween($photo,env('DOMEN_URL')."/storage",".jpeg");
+                Storage::disk("local")->delete("public".$photo);
+            }
         }
+        
 
 
 
-       
-        $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
-        $max = $this->getStringBetween(Storage::url($photos[count($photos) - 1]),$mineral->id,".");
-
-       
-        $files = $request->input('photos');
-        $i = $max++;
-        foreach($files as $file)
+        if($request->input('photos') != null)
         {
-           $file = base64_decode($file);  
-           Storage::put("photo/$mineral->id/$i.jpeg",$file);
-           $i++;
+            $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
+            $max = $this->getStringBetween(Storage::url($photos[count($photos) - 1]),$mineral->id."/",".");
+    
+
+           
+            $i = ((int)$max);
+            $i++;
+
+
+            $files = $request->input('photos');
+            foreach($files as $file)
+            {
+               $file = base64_decode($file);  
+               Storage::disk('local')->put("public/photo/$mineral->id/$i.jpeg",$file);
+               $i++;
+            }
         }
+        
 
 
         $territories = $request->input('territories');
