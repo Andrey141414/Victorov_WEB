@@ -13,10 +13,20 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+   
+    protected $commands = [
+        'App\Console\Commands\Test'
+    ];
+     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('command:test')->everyMinute();
+        //$schedule->command('elama:facebook_leads')->everyThirtyMinutes();
+
     }
+
+
+
+    
 
     /**
      * Register the commands for the application.
