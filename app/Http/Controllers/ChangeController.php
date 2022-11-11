@@ -71,7 +71,16 @@ class ChangeController extends Controller
         if($request->input('photos') != null)
         {
             $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
-            $max = $this->getStringBetween(Storage::url($photos[count($photos) - 1]),$mineral->id."/",".");
+
+            if([count($photos)] == 0)
+            {
+                $max = 0;
+            }
+            else{
+                $max = $this->getStringBetween(Storage::url($photos[count($photos) - 1]),$mineral->id."/",".");
+            }
+
+            //$max = $this->getStringBetween(Storage::url($photos[count($photos) - 1]),$mineral->id."/",".");
     
 
            
