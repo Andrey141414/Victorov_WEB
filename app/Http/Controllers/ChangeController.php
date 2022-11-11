@@ -53,10 +53,23 @@ class ChangeController extends Controller
         $mineral->save();
         
 
-        Storage::deleteDirectory("photo/$mineral->id");
+        
+        
+        $delete_photos = $request->input('delete_photos');
+        foreach($delete_photos as $photo)
+        {
+            Storage::disk("local")->delete($photo);
+        }
 
+
+
+       
+        $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
+        $max = $this->getStringBetween($photos[count($photos) - 1],$mineral->id,".");
+
+       
         $files = $request->input('photos');
-        $i = 0;
+        $i = $max++;
         foreach($files as $file)
         {
            $file = base64_decode($file);  
@@ -85,5 +98,9 @@ class ChangeController extends Controller
 
         return response()->json(Minerals::where('id',$mineral->id)->first()); 
     }  
-
+    function getStringBetween($str,$from,$to)
+    {
+        $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
+        return substr($sub,0,strpos($sub,$to));
+    }
 }

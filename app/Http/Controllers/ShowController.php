@@ -12,47 +12,25 @@ class ShowController extends Controller
 {
     //
     
+
+
+
+    
+    function getStringBetween($str,$from,$to)
+    {
+        $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
+        return substr($sub,0,strpos($sub,$to));
+    }
+    
     public function test(Request $request)
     {
 
-        Storage::disk("local")->makeDirectory('public/'.'IN_GOOD_HANDS/');
-        $file = 'C:\Users\andru\OneDrive\Рабочий стол\лабы для пацанов\application\storage\app\public\photo\72\0.jpeg';
-        Storage::url($file);
-
-return Storage::url($file);
-
-       // return str_replace("1","2","111222");
-        //     array|string $search,
-        //     array|string $replace,
-        //     string|array $subject,
-        //     int &$count = null
-        // ): string|array
-
-
-
-
-        // $directory = 'photo/56';
-        // Storage::deleteDirectory($directory);
-
-        // return 0;
+        $str = "[modid=256]";
+        $from = "=";
+        $to = "]";
         
-        $files = Storage::disk("local")->allFiles("/photo/57");
-        $file = $files[1];
-        $file1 = $files[0];
-        //Storage::download($files[0]);
-        $path1 = str_replace("\\","/",Storage::path($file));
-        $path0 = str_replace("\\","/",Storage::path($file1));
+        echo $this->getStringBetween($str,$from,$to);
 
-        
-$arr = [
-    response()->file($path0),
-    response()->file($path1),
-];
-return $arr[1];
-
-//return response()->file([$path0,$path1]);
-        //return response()->file('C:\Users\andru\OneDrive\Рабочий стол\лабы для пацанов\application\storage\app\photo\58');
-        //return "<img src=$file>";
        
     }
     public function allStones()
@@ -83,7 +61,7 @@ return $arr[1];
             }
            else{
             $photo = null;
-            
+
            }
             $stone_name = Stones::where('id',$mineral->id_stone)->first()->name;
             $response[] = ([
