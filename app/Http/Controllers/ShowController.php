@@ -144,4 +144,48 @@ return $arr[1];
         }
         return  $response;
     }
+
+    public function getMineralEdit(Request $request)
+    {
+        $mineral_id = $request->input('id_mineral');
+
+        $mineral  = Minerals::where('id',$mineral_id)->first();
+
+        $stone_id = Stones::where('id',$mineral->id_stone)->first()->id;
+
+        $m_ts = MineralTerritory::where('id_mineral', $mineral_id)->get();
+
+
+
+
+        $response['mineral'] = ([
+            'id_mineral'=> $mineral_id,
+            'name'      =>$mineral->name,
+            'weight'    =>$mineral->weight,
+            'length'    =>$mineral->length,
+            'width'	    =>$mineral->width,
+            'height'    =>$mineral->height,
+            'description'=>	$mineral->description,
+            'id_stone' => $stone_id,
+            
+        ]);
+       
+
+        $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
+
+       
+        foreach($photos as $photo)
+        {
+            $photo =  Storage::url($photo);
+            $response['photos'][] = env('DOMEN_URL').($photo);
+        }
+       
+        foreach($m_ts as $m_t)
+        {
+            $territory_info = Territories::where('id',$m_t->id_territory)->first();
+            $response['territories'][]  = ($territory_info->id);
+        }
+
+        return $response;
+    }
 }

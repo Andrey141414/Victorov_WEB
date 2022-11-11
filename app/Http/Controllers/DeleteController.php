@@ -37,7 +37,7 @@ class DeleteController extends Controller
 
         $id_mineral = $request->input('id_mineral');
         
-        Storage::deleteDirectory("photo/$id_mineral");
+        Storage::deleteDirectory("public/photo/$id_mineral");
         $mineral = Minerals::where('id',$id_mineral)->first();
         $mineral->delete();
         

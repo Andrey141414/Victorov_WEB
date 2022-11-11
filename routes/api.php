@@ -24,6 +24,7 @@ Route::controller(App\Http\Controllers\ShowController::class)->group(function ()
     Route::get('/all_minerals', 'allMinerals');
     Route::get('/all_territories', 'allTerritories');
     Route::get('/get_mineral', 'getMineral');
+    Route::get('/get_mineral_edit', 'getMineralEdit');
 
     
 });
