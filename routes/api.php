@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
+header("Set-Cookie: cross-site-cookie=whatever; SameSite=None; Secure");
 
 
 Route::controller(App\Http\Controllers\ShowController::class)->group(function () {
@@ -25,8 +25,6 @@ Route::controller(App\Http\Controllers\ShowController::class)->group(function ()
     Route::get('/all_territories', 'allTerritories');
     Route::get('/get_mineral', 'getMineral');
     Route::get('/get_mineral_edit', 'getMineralEdit');
-
-    
 });
 
 Route::controller(App\Http\Controllers\CreateController::class)->group(function () {
