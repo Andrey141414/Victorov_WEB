@@ -61,6 +61,7 @@ class ChangeController extends Controller
             {
                 $photo = substr($photo ,strlen(env('DOMEN_URL')."/storage"));
                 //$photo = $this->getStringBetween($photo,env('DOMEN_URL')."/storage",".jpeg");
+                echo("public".$photo."\n");
                 Storage::disk("local")->delete("public".$photo);
             }
         }
@@ -75,17 +76,19 @@ class ChangeController extends Controller
             if(count($photos) == 0)
             {
                 $max = 0;
+                $i = ((int)$max);
+                
             }
             else{
                 $max = $this->getStringBetween(Storage::url($photos[count($photos) - 1]),$mineral->id."/",".");
+                $i = ((int)$max);
+                $i++;
             }
 
-            //$max = $this->getStringBetween(Storage::url($photos[count($photos) - 1]),$mineral->id."/",".");
-    
+            
 
            
-            $i = ((int)$max);
-            $i++;
+           
 
 
             $files = $request->input('photos');
