@@ -69,7 +69,7 @@ class ChangeController extends Controller
 
        
         $photos = Storage::disk("local")->allFiles("public/photo/$mineral->id");
-        $max = $this->getStringBetween($photos[count($photos) - 1],$mineral->id,".");
+        $max = $this->getStringBetween($photos[count($photos)],$mineral->id,".");
 
        
         $files = $request->input('photos');
