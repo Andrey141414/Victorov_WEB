@@ -60,7 +60,7 @@ class ChangeController extends Controller
         
         foreach($delete_photos as $photo)
         {
-            $photo = $this->getStringBetween($photo,env('DOMEN_URL')."/storage","");
+            $photo = $this->getStringBetween($photo,env('DOMEN_URL')."/storage",".jpeg");
             Storage::disk("local")->delete("public".$photo);
             return $photo;
         }
